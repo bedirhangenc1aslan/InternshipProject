@@ -1,5 +1,5 @@
-import BoxPredictor
-import Matcher
+from .BoxPredictor import BoxPredictor
+from .Matcher import Matcher
 import torch
 class ModelLoader:
     def __init__(self):

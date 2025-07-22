@@ -1,4 +1,5 @@
 from Entities import Plane , Helicopter , Weapon
+from .IdBag import IdBag
 class Objects:
     def __init__(self, IdBag, cls_types,time_series):
         self.IdBag = IdBag
