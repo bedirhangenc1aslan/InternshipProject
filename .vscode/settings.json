@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./YOLOV12/yolov12"
+    ]
+}
