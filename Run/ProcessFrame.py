@@ -8,10 +8,11 @@ import torch
 
 class ProcessFrame:
     def __init__(self , FOLDER_PATH , TIME_SERIES):
-        self.image_paths = list(FOLDER_PATH.glob("*.jpg"))  # sadece jpg
+        folder = Path(FOLDER_PATH)
+        self.image_paths = list(folder.glob("*.jpg"))  # sadece jpg
 
         # Tüm yaygın uzantılar için:
-        self.image_paths = [p for p in FOLDER_PATH.iterdir() if p.suffix.lower() in [".jpg", ".png", ".jpeg"]]
+        self.image_paths = [p for p in folder.iterdir() if p.suffix.lower() in [".jpg", ".png", ".jpeg"]]
         self.initialize = Initialize(self.image_paths[0] , time_series=TIME_SERIES)
         self.frame_idx = 1
     def process_frame(self):
@@ -31,9 +32,7 @@ class ProcessFrame:
 
         tracker.match_objects(bboxes=bboxes , clss=clss , confs=confs , match_threshold=0.5)
         self.frame_idx += 1
-        return self.frame_idx
-    def get_objects(self):
-        return self.initialize.objects
+        return 
 
         
 
