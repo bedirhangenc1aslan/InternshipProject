@@ -28,21 +28,21 @@ class Initialize:
             self.objects.add_object(object["class_name"], object["class_id"] , object["coordinates"] , object["confidence"])
 
     def __get_cls_types__(self):
-        cls_types = {"icon_0" : "Weapon",
-                     "icon_1" : "Weapon",
-                     "icon_2" : "Weapon",
-                     "icon_3" : "Weapon",
-                     "icon_4" : "Plane",
-                     "icon_5" : "Plane",
-                     "icon_6" : "Plane",
-                     "icon_7" : "Plane",
-                     "icon_8" : "Plane",
-                     "icon_9" : "Plane",
-                     "icon_10" : "Plane",
-                     "icon_11" : "Plane",
-                     "icon_12" : "Plane",
-                     "icon_13" : "Plane",
-                     "icon_14" : "Plane"
+        cls_types = {"ikon_0" : "Weapon",
+                     "ikon_1" : "Weapon",
+                     "ikon_2" : "Weapon",
+                     "ikon_3" : "Weapon",
+                     "ikon_4" : "Plane",
+                     "ikon_5" : "Plane",
+                     "ikon_6" : "Plane",
+                     "ikon_7" : "Plane",
+                     "ikon_8" : "Plane",
+                     "ikon_9" : "Plane",
+                     "ikon_10" : "Plane",
+                     "ikon_11" : "Plane",
+                     "ikon_12" : "Plane",
+                     "ikon_13" : "Plane",
+                     "ikon_14" : "Plane"
                      }
         return cls_types
     

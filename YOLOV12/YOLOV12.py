@@ -14,17 +14,11 @@ class YOLOV12:
         results = self.model(IMAGE_PATH, verbose=False)
 
         first_result = results[0]
-
-        # Modelin tanıdığı sınıf isimlerini alalım (örn: {0: 'person', 1: 'car', ...})
         class_names = first_result.names
-
-        # 4. Tespit edilen nesnelerin ham verilerini işleyin ve yazdırın
-        # Daha sonra kullanmak için verileri saklayacağımız bir liste
         detections_list = []
 
         # Her bir tespit (bounding box) için bilgileri alalım
         for i, box in enumerate(first_result.boxes):
-
             # Güven skorunu al
             confidence = box.conf[0].item()
 

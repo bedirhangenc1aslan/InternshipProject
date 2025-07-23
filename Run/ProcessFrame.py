@@ -22,10 +22,12 @@ class ProcessFrame:
         detections_list = yolov12.predict_image(self.image_paths[self.frame_idx] , CONFIDENCE_THRESHOLD= 0.5)
         tracker = self.initialize.tracker
 
-
         tracker.match_objects(detections_list, match_threshold=0.5)
+
         self.frame_idx += 1
-        return 
+        return self.frame_idx
+    def get_objects(self):
+        return self.initialize.objects.get_objects()
 
         
 
