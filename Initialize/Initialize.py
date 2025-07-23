@@ -10,13 +10,13 @@ class Initialize:
         self.yolov12 = YOLOV12()
         self.detections_list = self.yolov12.predict_image(IMAGE_PATH=IMAGE_PATH , CONFIDENCE_THRESHOLD=0.5)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model_loader = ModelLoader
+        self.model_loader = ModelLoader()
         boxmodel_path = Path(__file__).parent.parent/ 'Models/BestBoxPredictor.pth'
         matchmodel_path = Path(__file__).parent.parent/ 'Models/Matcher.pth'
         self.boxPredictor = self.model_loader.load_model(boxmodel_path,"BoxPredictor",self.device)
         self.matcher = self.model_loader.load_model(matchmodel_path,"Matcher",self.device)
 
-        self.cls_types = self.__get_cls_types__() # Burası doldurulcak
+        self.cls_types = self.__get_cls_types__()
         self.idbag = IdBag(length=100)
         self.objects = Objects(self.idbag , self.cls_types , self.time_series)
 
