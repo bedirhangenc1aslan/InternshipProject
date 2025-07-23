@@ -21,10 +21,7 @@ class Initialize:
         self.objects = Objects(self.idbag , self.cls_types , self.time_series)
 
         self.__create_objects__()
-        self.tracker = ObjectTracker(self.boxPredictor , self.matcher , conf_th=0.5)
-
-
-
+        self.tracker = ObjectTracker(self.boxPredictor ,self.objects , self.matcher , conf_th=0.5)
 
     def __create_objects__(self):
         for object in self.detections_list:
