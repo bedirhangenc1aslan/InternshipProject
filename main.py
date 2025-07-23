@@ -9,7 +9,7 @@ def draw_objects_on_frame(frame, objects_dict):
     h, w, _ = frame.shape
     for obj_id, obj_instance in objects_dict.items():
         try:
-            bbox = obj_instance.get_box()[-1]
+            bbox = obj_instance.get_box()
             if not isinstance(bbox, (list, tuple)) or len(bbox) != 4:
                 continue
 
@@ -22,13 +22,11 @@ def draw_objects_on_frame(frame, objects_dict):
             color = (0, 255, 0) # Parlak Yeşil
             thickness = 2
             cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), color, thickness)
-            
             label = f"ID: {obj_id}"
             font = cv2.FONT_HERSHEY_SIMPLEX
             font_scale = 0.6
             font_color = (255, 255, 255)
-            font_thickness = 1
-            
+            font_thickness = 2
             (text_w, text_h), _ = cv2.getTextSize(label, font, font_scale, font_thickness)
             cv2.rectangle(frame, (x_min, y_min - text_h - 5), (x_min + text_w, y_min), color, -1)
             cv2.putText(frame, label, (x_min, y_min - 5), font, font_scale, font_color, font_thickness)
