@@ -1,7 +1,7 @@
 import torch
-
+from Models import BoxPredictor , Matcher
 class ObjectTracker:
-    def __init__(self, box_predictor, objects, matcher, conf_th):
+    def __init__(self, box_predictor, objects, matcher, conf_th = 0.5):
         self.box_predictor = box_predictor
         self.Objects = objects
         self.matcher = matcher
@@ -28,7 +28,7 @@ class ObjectTracker:
         
         return match_score
 
-    def match_objects(self, bboxes, clss, confs, match_threshold):
+    def match_objects(self, bboxes, clss, confs, match_threshold = 0.5):
         tracked_objects = self.Objects.get_objects()
         
         if not bboxes:
@@ -56,11 +56,9 @@ class ObjectTracker:
                 track.take_frame(matched_bbox, matched_cls, matched_conf)
             else:
                 track.take_frame(None, None, 0)
-        # Buraya bakılcak
         for i in range(len(detection_data)):
             if not is_used_box[i]:
                 new_bbox, new_cls, new_conf = detection_data[i]
-                if new_conf.max() > self.conf_th:
+                if new_conf > self.conf_th:
                     self.Objects.add_object(new_bbox, new_cls, new_conf)
-
         return
