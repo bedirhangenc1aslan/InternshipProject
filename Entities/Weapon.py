@@ -12,7 +12,7 @@ class Weapon:
 
         self.history = deque(maxlen=self.time_serial)
         initial_condition = [self.bbox, self.cls, self.conf]
-        history_padding = [[0, 0, 0, 0], "0", 0]
+        history_padding = [[0, 0, 0, 0], 0, 0]
 
         for _ in range(self.time_serial):
             self.history.append(history_padding)
