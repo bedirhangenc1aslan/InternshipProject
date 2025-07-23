@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 class YOLOV12:
     def __init__(self):
-        self.model = YOLO('best.pt')
+        self.model = YOLO('./best.pt')
     def predict_video(self , VIDEO_PATH):
         results_generator = self.model.track(source=VIDEO_PATH, show=False, tracker='bytetrack.yaml', conf=0.5, iou=0.3, stream=True, persist=True)
         #Tamamlancak
