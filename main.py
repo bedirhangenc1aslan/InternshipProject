@@ -4,34 +4,49 @@ from tqdm import tqdm
 
 from Converter import ImageCreator
 from Run import ProcessFrame
+#
+# --- NİHAİ VE DOĞRU ÇALIŞAN KOD ---
+# Lütfen mevcut draw_objects_on_frame fonksiyonunuzu bununla değiştirin.
+#
 
 def draw_objects_on_frame(frame, objects_dict):
-    h, w, _ = frame.shape
     for obj_id, obj_instance in objects_dict.items():
         try:
+            # Gelen verinin [x_min, y_min, x_max, y_max] formatında olduğunu biliyoruz.
             bbox = obj_instance.get_box()
+            
+            # Verinin geçerli bir liste/demet olduğunu kontrol et.
             if not isinstance(bbox, (list, tuple)) or len(bbox) != 4:
                 continue
 
-            x_center, y_center, box_w, box_h = bbox
-            x_min = int((x_center - box_w / 2) * w)
-            y_min = int((y_center - box_h / 2) * h)
-            x_max = int((x_center + box_w / 2) * w)
-            y_max = int((y_center + box_h / 2) * h)
-            
-            color = (0, 255, 0) # Parlak Yeşil
+            # --- DÜZELTME BURADA ---
+            # Artık HİÇBİR HESAPLAMA YAPMIYORUZ.
+            # Gelen veriyi doğrudan ve tamsayıya çevirerek kullanıyoruz.
+            x_min = int(bbox[0])
+            y_min = int(bbox[1])
+            x_max = int(bbox[2])
+            y_max = int(bbox[3])
+            # --- DÜZELTME SONU ---
+
+            # Çizim işlemleri
+            color = (0, 255, 0)  # Parlak Yeşil
             thickness = 2
             cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), color, thickness)
+            
             label = f"ID: {obj_id}"
             font = cv2.FONT_HERSHEY_SIMPLEX
-            font_scale = 0.6
-            font_color = (255, 255, 255)
+            font_scale = 0.7
+            font_color = (255, 255, 255) # Beyaz
             font_thickness = 2
+            
             (text_w, text_h), _ = cv2.getTextSize(label, font, font_scale, font_thickness)
             cv2.rectangle(frame, (x_min, y_min - text_h - 5), (x_min + text_w, y_min), color, -1)
             cv2.putText(frame, label, (x_min, y_min - 5), font, font_scale, font_color, font_thickness)
-        except (IndexError, AttributeError, TypeError):
+
+        except (IndexError, AttributeError, TypeError, ValueError):
+            # Olası hatalara karşı döngüye devam et.
             continue
+            
     return frame
 
 def main():
