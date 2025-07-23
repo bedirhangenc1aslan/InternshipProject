@@ -21,18 +21,9 @@ class ProcessFrame:
         yolov12 = self.initialize.yolov12
         detections_list = yolov12.predict_image(self.image_paths[self.frame_idx] , CONFIDENCE_THRESHOLD= 0.5)
         tracker = self.initialize.tracker
-        cls_names = []
-        bboxes = []
-        clss = []
-        confs = []
 
-        for detection in detections_list:
-            cls_names.append(detection["class_name"])
-            bboxes.append(detection["coordinates"])
-            clss.append(detection["class_id"])
-            confs.append(detection["confidence"])
 
-        tracker.match_objects(bboxes=bboxes , clss=clss , confs=confs , match_threshold=0.5)
+        tracker.match_objects(detections_list, match_threshold=0.5)
         self.frame_idx += 1
         return 
 

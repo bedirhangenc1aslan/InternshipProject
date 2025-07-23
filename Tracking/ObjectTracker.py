@@ -28,37 +28,41 @@ class ObjectTracker:
         
         return match_score
 
-    def match_objects(self, bboxes, clss, confs, match_threshold = 0.5):
+    def match_objects(self, detections_list, match_threshold = 0.5):
         tracked_objects = self.Objects.get_objects()
-        
-        if not bboxes:
-            for obj_id, track in tracked_objects.items():
-                track.take_frame(None, None, 0)
-            return
 
-        is_used_box = [False] * len(bboxes)
-        detection_data = list(zip(bboxes, clss, confs))
+        is_used_box = [False] * len(detections_list)
 
         for obj_id, track in tracked_objects.items():
             best_match_score = match_threshold
             best_match_idx = None
             
-            for i, (bbox, cls, conf) in enumerate(detection_data):
+            for i, detection in enumerate(detections_list):
+
+                class_name , class_id , confidence , coordinates = self.__get_detection__(detection)
+
                 if not is_used_box[i]:
-                    score = self.__is_match__(bbox, cls, conf, track)
+                    score = self.__is_match__(coordinates, class_id, confidence, track)
                     if score > best_match_score:
                         best_match_score = score
                         best_match_idx = i
             
             if best_match_idx is not None:
                 is_used_box[best_match_idx] = True
-                matched_bbox, matched_cls, matched_conf = detection_data[best_match_idx]
-                track.take_frame(matched_bbox, matched_cls, matched_conf)
+                class_name , class_id , confidence , coordinates = self.__get_detection__(detections_list[best_match_idx])
+                track.take_frame(coordinates, class_id, confidence)
             else:
                 track.take_frame(None, None, 0)
-        for i in range(len(detection_data)):
+        for i in range(len(detections_list)):
             if not is_used_box[i]:
-                class_name,class_id,  conf,bbox = detection_data[i]
+                class_name , class_id , confidence , coordinates = self.__get_detection__(detections_list[i])
                 if conf > self.conf_th:
-                    self.Objects.add_object(class_name, class_id , bbox , conf)
+                    self.Objects.add_object(class_name, class_id , coordinates , confidence)
         return
+    
+    def __get_detection__(self , detection):                
+        class_name = detection["class_name"]
+        class_id = detection["class_id"]
+        confidence = detection["confidence"]
+        coordinates = detection["coordinates"]
+        return class_name , class_id , confidence , coordinates
