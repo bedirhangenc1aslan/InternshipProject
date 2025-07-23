@@ -11,7 +11,7 @@ class ModelLoader:
             model = BoxPredictor()
             model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
         elif TYPE == "Matcher":
-            model = Matcher(16 , 2)
+            model = Matcher(15 , 2)
             model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
         self.model_dict[MODEL_PATH] = model
         return model
