@@ -6,7 +6,7 @@ import torch
 class Initialize:
     def __init__(self , IMAGE_PATH , time_series):
         self.time_series = time_series
-        self.yolov12 = YOLOV12
+        self.yolov12 = YOLOV12()
         self.detections_list = self.yolov12.predict_image(IMAGE_PATH=IMAGE_PATH , CONFIDENCE_THRESHOLD=0.5)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model_loader = ModelLoader
