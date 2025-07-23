@@ -58,7 +58,7 @@ class ObjectTracker:
                 track.take_frame(None, None, 0)
         for i in range(len(detection_data)):
             if not is_used_box[i]:
-                new_bbox, new_cls, new_conf = detection_data[i]
-                if new_conf > self.conf_th:
-                    self.Objects.add_object(new_bbox, new_cls, new_conf)
+                class_name,class_id,  conf,bbox = detection_data[i]
+                if conf > self.conf_th:
+                    self.Objects.add_object(class_name, class_id , bbox , conf)
         return
