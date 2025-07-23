@@ -6,8 +6,8 @@ class YOLOV12:
         self.model = YOLO(str(model_path))
     
     def predict_video(self , VIDEO_PATH):
-        results_generator = self.model.track(source=VIDEO_PATH, show=False, tracker='bytetrack.yaml', conf=0.5, iou=0.3, stream=True, persist=True)
-        #Tamamlancak
+        results_generator = self.model.track(source=VIDEO_PATH, show=False, tracker='bytetrack.yaml', conf=0.3, iou=0.3, stream=True, persist=True, verbose=False)
+        return results_generator
 
 
     def predict_image(self, IMAGE_PATH ,CONFIDENCE_THRESHOLD = 0.5):
