@@ -21,6 +21,7 @@ class Weapon:
 
     def take_frame(self, bbox, cls_, conf):
         if conf == 0:
+            print("lsdmflsdfmi")
             self.history.append(self.history_padding)
             return
         self.bbox = bbox
