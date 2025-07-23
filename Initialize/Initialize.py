@@ -3,6 +3,7 @@ from Objects import Objects , IdBag
 from Models import ModelLoader , BoxPredictor , Matcher
 from Tracking import ObjectTracker
 import torch
+from pathlib import Path
 class Initialize:
     def __init__(self , IMAGE_PATH , time_series):
         self.time_series = time_series
@@ -10,8 +11,10 @@ class Initialize:
         self.detections_list = self.yolov12.predict_image(IMAGE_PATH=IMAGE_PATH , CONFIDENCE_THRESHOLD=0.5)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model_loader = ModelLoader
-        self.boxPredictor = self.model_loader.load_model("./Models/BestBoxPredictor.pth","BoxPredictor",self.device)
-        self.matcher = self.model_loader.load_model("./Models/Matcher.pth","Matcher",self.device)
+        boxmodel_path = Path(__file__).parent.parent/ 'Models/BestBoxPredictor.pth'
+        matchmodel_path = Path(__file__).parent.parent/ 'Models/Matcher.pth'
+        self.boxPredictor = self.model_loader.load_model(boxmodel_path,"BoxPredictor",self.device)
+        self.matcher = self.model_loader.load_model(matchmodel_path,"Matcher",self.device)
 
         self.cls_types = self.__get_cls_types__() # Burası doldurulcak
         self.idbag = IdBag(length=100)
