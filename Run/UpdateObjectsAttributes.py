@@ -3,7 +3,8 @@ from Objects import Objects
 class UpdateObjectsAttributes:
     def __init__(self , cls_names):
         self.cls_names = cls_names
-    
+
+
 
     def update_attributes(self , result , objects):
         for box_data in result.boxes.data.cpu().numpy():
