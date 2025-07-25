@@ -1,7 +1,7 @@
 from collections import deque
 
 class Object:
-    def __init__(self, id_, cls_, bbox, conf ,time_series, name ,attitude="Neutral"):
+    def __init__(self, id_, name, cls_, bbox, conf ,time_series, attitude="Neutral"):
         self.id = id_
         self.name = name
         self.cls = cls_
