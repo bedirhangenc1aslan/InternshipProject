@@ -1,4 +1,4 @@
-from Entities import Plane, Helicopter, Weapon
+from Entities import Object,Plane, Helicopter, Weapon
 
 class Objects:
     def __init__(self, cls_types, time_series):
@@ -25,13 +25,30 @@ class Objects:
             return True
             
         return False
-
+    def update_object(self, id ,bbox , cls , conf , cond = "Detected" , is_lost = False):
+        if self.is_object_present(id):
+            object = self.objects.get(id)
+            if is_lost:
+                object.update(None , None , 0 , cond)
+                if object.get_lost_time() >= self.time_series:
+                    return True , True
+                return True , False
+            object.update(bbox , cls , conf , cond)
+            return False , False
+        return False , True
+        
     def delete_object(self, id_):
         if id_ in self.objects:
             self.objects.pop(id_)
 
     def get_single_object(self, id_):
         return self.objects.get(id_)
+
+    def is_object_present(self , id ):
+        object = self.objects.get(id)
+        if object:
+            return True
+        return False
 
     def get_objects(self):
         return self.objects

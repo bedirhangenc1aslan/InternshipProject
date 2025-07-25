@@ -1,39 +1,29 @@
 from collections import deque
-class Helicopter:
+from .Object import Object
+import math
+class Helicopter(Object):
     def __init__(self, id_, name, cls_, bbox, conf, time_serial, attitude="Neutral"):
-        self.id = id_
-        self.name = name
-        self.cls = cls_
-        self.bbox = bbox
-        self.conf = conf
-        self.time_serial = time_serial
-        self.attitude = attitude
+        super().__init__(id_, name, cls_, bbox, conf, time_serial, attitude)
+    
+    def get_velocity(self):
+        x1 , y1 = (self.history[-1][0][0] + self.history[-1][0][2])/2 , (self.history[-1][0][1] + self.history[-1][0][3])/2
+        x2 , y2 = (self.history[-2][0][0] + self.history[-2][0][2])/2 , (self.history[-2][0][1] + self.history[-2][0][3])/2
 
-        self.history = deque(maxlen=self.time_serial)
-        initial_condition = [self.bbox, self.cls, self.conf]
-        self.history_padding = [[0, 0, 0, 0], 0, 0]
+        dx = x2 - x1
+        dy = y2 - y1
+        velocity = math.sqrt((dx)**2 + (dy)**2)
 
-        for _ in range(self.time_serial):
-            self.history.append(self.history_padding)
+        angle_rad = math.atan2(dx, -dy)
+        angle_deg = math.degrees(angle_rad)
+        angle_deg = (angle_deg + 360) % 360
 
-        self.history.append(initial_condition)
+        return velocity , angle_deg
 
-    def take_frame(self, bbox, cls_, conf):
-        if conf == 0:
-            self.history.append(self.history_padding)
-            return
-        self.bbox = bbox
-        self.cls = cls_
-        self.conf = conf
-        self.history.append([self.bbox, self.cls, self.conf])
-    def get_box(self):
-        return self.bbox
-    def get_cls(self):
-        return self.cls
-    def get_conf(self):
-        return self.cls
-    def get_history(self):
-        return self.history
+
+
+
+
+
         
     
 
