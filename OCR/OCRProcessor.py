@@ -60,8 +60,8 @@ class OCRProcessor:
 
             # 4. ADIM: Hedef OCR bölgesini hesapla
             # Bu kısım artık doğru (ox1, oy1, ox2, oy2) ve (box_w, box_h) değerleriyle çalışacak
-            search_area_w = box_w * 8
-            search_area_h = box_h * 0.60
+            search_area_w = 200
+            search_area_h = 60
             
             # Arama bölgesinin yatay merkezini nesnenin merkeziyle aynı yap
             # center_x zaten elimizde
