@@ -18,6 +18,8 @@ class Helicopter(Object):
         angle_deg = (angle_deg + 360) % 360
 
         return velocity , angle_deg
+    def type_(self):
+        return 1
 
 
 

@@ -6,3 +6,5 @@ class Weapon(Object):
     
     def get_velocity(self):
         return 0 , 0
+    def type_(self):
+        return False

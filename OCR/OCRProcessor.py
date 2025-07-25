@@ -88,7 +88,7 @@ class OCRProcessor:
 
                 if results:
                     full_text = " ".join([res[1] for res in results])
-                    parsed_string = self.__parse_info__(full_text)
+                    parsed_string = self.__parse_info__(full_text , obj.type_())
                     
                     if parsed_string:
                         obj.set_name(parsed_string)
@@ -97,11 +97,36 @@ class OCRProcessor:
 
         return processed_image, objects
 
-    def __parse_info__(self, text: str):
-        # BU METODDA DEĞİŞİKLİK YOK
-        only_numbers_and_spaces = re.sub(r'[^\d]', ' ', text)
-        number_list = only_numbers_and_spaces.split()
-        if len(number_list) < 3:
+    def __parse_info__(self, text: str, type=0):
+        if type == 0:
+            only_numbers_and_spaces = re.sub(r'[^\d]', ' ', text)
+            number_list = only_numbers_and_spaces.split()
+            if len(number_list) < 3:
+                return None
+            return f"Sınıf Kodu:{number_list[0]} Alt Sınıf Kodu:{number_list[1]} Obje Kodu:{number_list[2]}"
+
+        elif type == 1:
+            parts = text.split('-')
+            if len(parts) < 2:
+                return None
+
+            # Sol taraf ID, sağ taraf model ve değerler
+            id_part = parts[0].strip()
+            right_part = parts[1].strip()
+
+            # Model adını harf olarak al (örnek: "mg")
+            model_match = re.match(r'([a-zA-Z]+)', right_part)
+            model = model_match.group(1) if model_match else "bilinmeyen model"
+
+            # Sağ taraftaki tüm sayıları bul
+            numbers = re.findall(r'\d+', right_part)
+            if len(numbers) < 2:
+                return None
+
+            altitude = numbers[0]
+            speed = numbers[1]
+
+            return f"{id_part} ID'li {model} modelindeki obje {altitude}m irtifada {speed} m/s hızla uçuyor."
+
+        else:
             return None
-        string = f"Ikon:{number_list[0]} Alt:{number_list[1]} Spd:{number_list[2]}"
-        return string
