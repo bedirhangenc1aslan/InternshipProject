@@ -10,9 +10,9 @@ from pathlib import Path
 class Initialize:
     def __init__(self, time_series):
         self.time_series = time_series
-        self.yolov12 = YOLOV12() 
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.yolov12 = YOLOV12(self.device) 
         self.model_loader = ModelLoader()
         
         # Model yolları

@@ -1,12 +1,23 @@
 from ultralytics import YOLO
 from pathlib import Path
 class YOLOV12:
-    def __init__(self):
+    def __init__(self,device='cuda'):
         model_path = Path(__file__).parent / 'best.pt'
         self.model = YOLO(str(model_path))
-    
+        self.device = device  # device parametresini sınıf özelliği olarak kaydediyoruz
+
     def predict_video(self , VIDEO_PATH):
-        results_generator = self.model.track(source=VIDEO_PATH, show=False, tracker='bytetrack.yaml', conf=0.5, iou=0.3, stream=True, persist=True, verbose=False)
+        results_generator = self.model.track(
+            source=VIDEO_PATH, 
+            show=False, 
+            tracker='botsort.yaml', 
+            conf=0.5, 
+            iou=0.3, 
+            stream=True, 
+            persist=True, 
+            verbose=False,
+            device=self.device
+        )
         return results_generator
 
 

@@ -27,7 +27,11 @@ class UpdateObjectsAttributes:
 
     def __assign_boxes__(self , result , objects):
         for box_data in result.boxes.data.cpu().numpy():
-            x_min, y_min, x_max, y_max, track_id, conf, cls_id = box_data
+            try:
+                x_min, y_min, x_max, y_max, track_id, conf, cls_id = box_data
+            except ValueError as e:
+                continue
+
             track_id = int(track_id)
             is_exists = objects.is_object_present(track_id)
 

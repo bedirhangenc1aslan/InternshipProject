@@ -7,7 +7,7 @@ from Run import ProcessFrame
 from Video import VideoCreator , ImageCreator
 
 def main():
-    video_path = "/home/nyenice/Desktop/Project Hiearchy/sssssssssssss.mp4"
+    video_path = "C:/Users/Bedirhan/Desktop/Project Hierachy/InternshipProject/sssssssssssss.mp4"
     output_video_path = "output_tracked_video.avi"
     time_series = 30
     image_creator = ImageCreator()

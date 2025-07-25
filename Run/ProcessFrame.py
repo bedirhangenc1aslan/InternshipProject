@@ -44,9 +44,7 @@ class ProcessFrame:
         frame_to_return = self.current_frame_index
         self.current_frame_index += 1
 
-        last_processed_frame_with_ocr = frame_with_ocr
-
-        return frame_to_return , last_processed_frame_with_ocr
+        return frame_to_return , frame_with_ocr
     
     def get_objects(self):
         return self.objects.get_objects()
